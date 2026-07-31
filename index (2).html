@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kassim Moutary — Engineering Portfolio</title>
+<meta name="description" content="Engineering portfolio of Kassim Moutary — AI, Computer Vision, Robotics, and Embedded Systems projects.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* ============================================
+     DESIGN TOKENS
+     Change these values to re-theme the whole site.
+     ============================================ */
+  :root {
+    --bg: #EEF2F6;              /* page background — engineering paper */
+    --bg-grid: #D7E1EA;         /* faint blueprint grid lines */
+    --panel: #FFFFFF;           /* card / panel background */
+    --panel-border: #C7D3DE;    /* card borders */
+    --ink: #16263D;             /* primary text — deep navy */
+    --ink-muted: #55677E;       /* secondary text */
+    --accent: #C4703B;          /* copper / solder accent */
+    --accent-strong: #9C5322;   /* accent hover state */
+    --accent-soft: #F0DCC9;     /* light accent tint for backgrounds */
+    --status-complete: #3F7D5C;
+    --status-progress: #C4703B;
+    --status-planned: #8393A6;
+
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'IBM Plex Sans', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+
+    --max-width: 1080px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation: none !important; transition: none !important; }
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(var(--bg-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+    background-size: 32px 32px;
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.65;
+  }
+
+  a { color: var(--accent); }
+  a:hover { color: var(--accent-strong); }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.78rem;
+    color: var(--accent-strong);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 18px;
+    height: 1px;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    color: var(--ink);
+    margin: 0 0 0.5em 0;
+  }
+
+  section {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 96px 24px;
+  }
+
+  /* ============================================
+     NAVIGATION
+     ============================================ */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(238, 242, 246, 0.88);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--panel-border);
+  }
+
+  nav {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo-mark {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  .logo-chip {
+    width: 30px;
+    height: 30px;
+    border: 1.5px solid var(--ink);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    position: relative;
+  }
+  .logo-chip::before, .logo-chip::after {
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 1.5px;
+    background: var(--ink);
+  }
+  .logo-chip::before { left: -6px; }
+  .logo-chip::after { right: -6px; }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--ink-muted);
+    transition: color 0.15s ease;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--accent-strong);
+  }
+
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: 1px solid var(--ink);
+    border-radius: 4px;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-toggle span, .nav-toggle span::before, .nav-toggle span::after {
+    content: "";
+    display: block;
+    width: 16px;
+    height: 1.5px;
+    background: var(--ink);
+    position: relative;
+  }
+  .nav-toggle span::before { top: -5px; position: absolute; }
+  .nav-toggle span::after { top: 5px; position: absolute; }
+
+  /* ============================================
+     HERO / HOME
+     ============================================ */
+  .hero {
+    padding-top: 72px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.2rem, 4.6vw, 3.6rem);
+    line-height: 1.12;
+    font-weight: 600;
+  }
+
+  .hero .lede {
+    font-size: 1.08rem;
+    color: var(--ink-muted);
+    max-width: 46ch;
+    margin-bottom: 32px;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.15s ease;
+    border: 1px solid transparent;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .btn-primary:hover {
+    background: var(--accent-strong);
+    color: white;
+  }
+  .btn-secondary {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+  .btn-secondary:hover {
+    border-color: var(--accent-strong);
+    color: var(--accent-strong);
+  }
+
+  .schematic {
+    width: 100%;
+    height: auto;
+  }
+  .schematic .trace {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 2;
+    stroke-dasharray: 500;
+    stroke-dashoffset: 500;
+    animation: draw 1.8s ease forwards;
+  }
+  .schematic .trace.d2 { animation-delay: 0.25s; }
+  .schematic .trace.d3 { animation-delay: 0.5s; }
+  @keyframes draw {
+    to { stroke-dashoffset: 0; }
+  }
+  .schematic .pad {
+    fill: var(--accent);
+    opacity: 0;
+    animation: fadein 0.4s ease forwards;
+  }
+  .schematic .pad.d1 { animation-delay: 1.0s; }
+  .schematic .pad.d2 { animation-delay: 1.3s; }
+  .schematic .pad.d3 { animation-delay: 1.6s; }
+  @keyframes fadein { to { opacity: 1; } }
+  .schematic .node-box {
+    fill: var(--panel);
+    stroke: var(--ink);
+    stroke-width: 1.5;
+  }
+  .schematic .node-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    fill: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .schematic .hub-circle {
+    fill: var(--panel);
+    stroke: var(--accent);
+    stroke-width: 2;
+  }
+  .schematic .hub-label {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 600;
+    fill: var(--ink);
+  }
+
+  /* ============================================
+     SECTION HEADERS
+     ============================================ */
+  .section-head {
+    margin-bottom: 48px;
+  }
+  .section-head h2 {
+    font-size: 1.9rem;
+  }
+
+  /* ============================================
+     ABOUT
+     ============================================ */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 48px;
+  }
+  .about-grid p {
+    color: var(--ink-muted);
+    max-width: 62ch;
+  }
+  .about-grid p strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .fact-panel {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    padding: 24px;
+  }
+  .fact-panel dt {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    margin-top: 18px;
+  }
+  .fact-panel dt:first-child { margin-top: 0; }
+  .fact-panel dd {
+    margin: 4px 0 0 0;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+
+  /* ============================================
+     PROJECTS
+     ============================================ */
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .project-card {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    padding: 22px;
+    position: relative;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .project-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .designator {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-muted);
+    letter-spacing: 0.05em;
+  }
+  .project-card h3 {
+    font-size: 1.05rem;
+    margin: 6px 0 8px 0;
+  }
+  .project-card p {
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+    margin: 0 0 16px 0;
+  }
+  .status-tag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: 100px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .status-tag::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .status-complete { background: #E4EFE9; color: var(--status-complete); }
+  .status-progress { background: var(--accent-soft); color: var(--status-progress); }
+  .status-planned { background: #E7EBEF; color: var(--status-planned); }
+
+  /* ============================================
+     RESUME / CERTIFICATES
+     ============================================ */
+  .panel-block {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    padding: 32px;
+  }
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  .cert-card {
+    background: var(--panel);
+    border: 1px dashed var(--panel-border);
+    border-radius: 6px;
+    padding: 22px;
+  }
+  .cert-card .cert-issuer {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .cert-card h3 {
+    font-size: 1rem;
+    margin: 6px 0;
+  }
+
+  /* ============================================
+     GALLERY
+     ============================================ */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .gallery-placeholder {
+    aspect-ratio: 4 / 3;
+    border: 1px dashed var(--panel-border);
+    border-radius: 6px;
+    background: var(--panel);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-align: center;
+    padding: 16px;
+  }
+  .gallery-placeholder svg { opacity: 0.4; }
+
+  /* ============================================
+     CONTACT
+     ============================================ */
+  .contact-links {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .contact-card {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    padding: 20px 24px;
+    text-decoration: none;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 220px;
+    transition: border-color 0.15s ease;
+  }
+  .contact-card:hover { border-color: var(--accent); }
+  .contact-card .contact-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: block;
+  }
+  .contact-card .contact-value {
+    font-weight: 500;
+  }
+
+  footer {
+    text-align: center;
+    padding: 40px 24px 60px 24px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink-muted);
+  }
+
+  /* ============================================
+     SCROLL REVEAL
+     ============================================ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ============================================
+     RESPONSIVE
+     ============================================ */
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .schematic { max-width: 340px; margin: 0 auto; }
+  }
+
+  @media (max-width: 680px) {
+    .nav-links {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--panel-border);
+      flex-direction: column;
+      padding: 16px 24px;
+      gap: 16px;
+      display: none;
+    }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: flex; }
+    section { padding: 64px 20px; }
+  }
+
+  /* Visible keyboard focus */
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#home" class="logo-mark">
+      <span class="logo-chip">KM</span>
+      Kassim Moutary
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#resume">Resume</a></li>
+      <li><a href="#certificates">Certificates</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span></button>
+  </nav>
+</header>
+
+<!-- ============================================
+     HOME
+     ============================================ -->
+<section id="home" class="hero">
+  <div>
+    <span class="eyebrow">Engineering Portfolio</span>
+    <h1>I build systems that see, sense, and respond.</h1>
+    <p class="lede">
+      Rising high school senior focused on <strong>AI, computer vision, and embedded systems</strong>.
+      I like figuring out how things work, then building something that proves I understand it —
+      from face-detection models to circuits that respond to the physical world.
+    </p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="#" class="btn btn-secondary">Connect on LinkedIn</a>
+    </div>
+  </div>
+
+  <div>
+    <!-- Signature schematic: three disciplines converging into one engineer -->
+    <svg class="schematic" viewBox="0 0 560 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schematic diagram showing Software, Hardware, and AI connecting into Kassim Moutary">
+      <!-- AI node, top center -->
+      <rect class="node-box" x="245" y="30" width="110" height="40" rx="3"/>
+      <text class="node-label" x="300" y="55" text-anchor="middle">AI</text>
+      <path class="trace" d="M300,70 L300,150" />
+      <circle class="pad d1" cx="300" cy="150" r="4"/>
+
+      <!-- SOFTWARE node, bottom left -->
+      <rect class="node-box" x="30" y="270" width="130" height="40" rx="3"/>
+      <text class="node-label" x="95" y="295" text-anchor="middle">SOFTWARE</text>
+      <path class="trace d2" d="M95,270 L95,215 L245,215" />
+      <circle class="pad d2" cx="245" cy="215" r="4"/>
+
+      <!-- HARDWARE node, bottom right -->
+      <rect class="node-box" x="400" y="270" width="130" height="40" rx="3"/>
+      <text class="node-label" x="465" y="295" text-anchor="middle">HARDWARE</text>
+      <path class="trace d3" d="M465,270 L465,215 L355,215" />
+      <circle class="pad d3" cx="355" cy="215" r="4"/>
+
+      <!-- Hub -->
+      <circle class="hub-circle" cx="300" cy="182" r="38"/>
+      <text class="hub-label" x="300" y="188" text-anchor="middle">KM</text>
+    </svg>
+  </div>
+</section>
+
+<!-- ============================================
+     ABOUT
+     ============================================ -->
+<section id="about" class="reveal">
+  <div class="section-head">
+    <span class="eyebrow">About</span>
+    <h2>Who I am</h2>
+  </div>
+  <div class="about-grid">
+    <p>
+      I'm <strong>Kassim Moutary</strong>, a rising senior applying to engineering and computer
+      engineering programs this fall. What draws me to this field is the ability to understand
+      how things actually function — and to solve real problems by building something rather
+      than just reading about it.
+    </p>
+    <p>
+      That curiosity has taken a few different shapes so far: training a computer vision model
+      to recognize faces during a week-long AI camp at VCU, working through robotics challenges
+      with a team at RITS Robotics Academy, and now starting to build embedded systems projects
+      of my own with Arduino — learning circuits, sensors, and code from the ground up.
+    </p>
+    <p>
+      This site tracks that progress as it happens — a working portfolio, not a finished one.
+    </p>
+
+    <dl class="fact-panel">
+      <dt>Status</dt>
+      <dd>Rising High School Senior</dd>
+      <dt>Location</dt>
+      <dd>Richmond, VA</dd>
+      <dt>Focus Areas</dt>
+      <dd>AI &middot; Computer Vision &middot; Embedded Systems &middot; Robotics</dd>
+      <dt>Programs</dt>
+      <dd>VCU AI Camp (RITS) &middot; RITS Robotics Academy</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ============================================
+     PROJECTS
+     ============================================ -->
+<section id="projects" class="reveal">
+  <div class="section-head">
+    <span class="eyebrow">Projects</span>
+    <h2>What I've built</h2>
+  </div>
+
+  <div class="project-grid">
+
+    <div class="project-card">
+      <span class="designator">CV-01</span>
+      <h3>Computer Vision — Face Detection</h3>
+      <p>Team project built during the RITS AI Summer Camp at VCU College of Engineering. Trained and tested a face-detection model as part of a small group.</p>
+      <span class="status-tag status-planned">Recovering Files</span>
+    </div>
+
+    <div class="project-card">
+      <span class="designator">ARD-001</span>
+      <h3>Blink LED</h3>
+      <p>First embedded systems project — controlling an LED with an Arduino UNO R3 and writing the first lines of C++ for a microcontroller.</p>
+      <span class="status-tag status-progress">Starting Soon</span>
+    </div>
+
+    <div class="project-card">
+      <span class="designator">ARD-002</span>
+      <h3>Traffic Light</h3>
+      <p>Sequencing multiple LEDs with timed delays to simulate a traffic signal.</p>
+      <span class="status-tag status-planned">Planned</span>
+    </div>
+
+    <div class="project-card">
+      <span class="designator">ARD-003</span>
+      <h3>Push Button LED</h3>
+      <p>Reading digital input from a pushbutton to control an LED — first steps into input-driven logic.</p>
+      <span class="status-tag status-planned">Planned</span>
+    </div>
+
+    <div class="project-card">
+      <span class="designator">ARD-004</span>
+      <h3>LCD Display</h3>
+      <p>Driving a character LCD screen to output real-time data from the microcontroller.</p>
+      <span class="status-tag status-planned">Planned</span>
+    </div>
+
+    <div class="project-card">
+      <span class="designator">ARD-005</span>
+      <h3>Ultrasonic Distance Sensor</h3>
+      <p>Measuring distance using an ultrasonic sensor and reading the values back through code.</p>
+      <span class="status-tag status-planned">Planned</span>
+    </div>
+
+    <div class="project-card">
+      <span class="designator">ARD-006</span>
+      <h3>Servo Motor Control</h3>
+      <p>Controlling motor position with PWM signals sent from the Arduino.</p>
+      <span class="status-tag status-planned">Planned</span>
+    </div>
+
+    <div class="project-card">
+      <span class="designator">ARD-007</span>
+      <h3>Motion Alarm</h3>
+      <p>Combining a motion sensor with sound/light output to build a simple alarm system.</p>
+      <span class="status-tag status-planned">Planned</span>
+    </div>
+
+    <div class="project-card">
+      <span class="designator">ROB-01</span>
+      <h3>Robotics Academy Projects</h3>
+      <p>Hands-on robotics work from RITS Robotics Academy — documentation and write-ups in progress.</p>
+      <span class="status-tag status-progress">Documenting</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     RESUME
+     ============================================ -->
+<section id="resume" class="reveal">
+  <div class="section-head">
+    <span class="eyebrow">Resume</span>
+    <h2>Resume</h2>
+  </div>
+  <div class="panel-block">
+    <p style="color: var(--ink-muted); margin-top: 0;">
+      A downloadable resume will be added here. Once it's ready, this section will link directly
+      to a PDF version for recruiters and admissions readers.
+    </p>
+    <a href="#" class="btn btn-secondary">Download Resume (Coming Soon)</a>
+  </div>
+</section>
+
+<!-- ============================================
+     CERTIFICATES
+     ============================================ -->
+<section id="certificates" class="reveal">
+  <div class="section-head">
+    <span class="eyebrow">Certificates</span>
+    <h2>Certifications</h2>
+  </div>
+  <div class="cert-grid">
+    <div class="cert-card">
+      <span class="cert-issuer">RITS &middot; VCU College of Engineering</span>
+      <h3>AI Summer Camp — Computer Vision Track</h3>
+      <p style="color: var(--ink-muted); font-size: 0.88rem; margin: 0;">Certificate image coming soon.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     GALLERY
+     ============================================ -->
+<section id="gallery" class="reveal">
+  <div class="section-head">
+    <span class="eyebrow">Gallery</span>
+    <h2>Photos &amp; Video</h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-placeholder">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="M21 15l-5-5L5 19"/></svg>
+      Robotics Academy — photo coming soon
+    </div>
+    <div class="gallery-placeholder">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="M21 15l-5-5L5 19"/></svg>
+      Drone project — photo coming soon
+    </div>
+    <div class="gallery-placeholder">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="M21 15l-5-5L5 19"/></svg>
+      RC car project — photo coming soon
+    </div>
+    <div class="gallery-placeholder">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="M21 15l-5-5L5 19"/></svg>
+      Escalator project — photo coming soon
+    </div>
+    <div class="gallery-placeholder">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="M21 15l-5-5L5 19"/></svg>
+      Arduino build — video coming soon
+    </div>
+    <div class="gallery-placeholder">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="M21 15l-5-5L5 19"/></svg>
+      VCU AI Camp — photo coming soon
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     CONTACT
+     ============================================ -->
+<section id="contact" class="reveal">
+  <div class="section-head">
+    <span class="eyebrow">Contact</span>
+    <h2>Get in touch</h2>
+  </div>
+  <div class="contact-links">
+    <a href="https://github.com/Kassim-Moutary" class="contact-card" target="_blank" rel="noopener">
+      <span>
+        <span class="contact-label">GitHub</span>
+        <span class="contact-value">Kassim-Moutary</span>
+      </span>
+    </a>
+    <a href="#" class="contact-card">
+      <span>
+        <span class="contact-label">LinkedIn</span>
+        <span class="contact-value">Coming soon</span>
+      </span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  Built with HTML, CSS, and JavaScript by Kassim Moutary — updated as the portfolio grows.
+</footer>
+
+<script>
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  // Close mobile menu after clicking a link
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+
+  // Scroll reveal animation for sections
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Highlight active nav link based on scroll position
+  const sections = document.querySelectorAll('section[id]');
+  const navAnchors = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 100;
+      if (window.scrollY >= sectionTop) {
+        current = section.getAttribute('id');
+      }
+    });
+    navAnchors.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+
+</body>
+</html>
