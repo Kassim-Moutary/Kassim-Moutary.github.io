@@ -9,10 +9,8 @@ First Arduino project — programming the onboard LED to blink in a
 custom double-flash pattern instead of a standard steady blink.
 
 ## What I Built
-Modified the classic Arduino "Blink" example to create a pattern where
-the LED flashes twice quickly (high-low-high-low in rapid succession),
-followed by a longer pause before repeating. This required adjusting
-the delay() timing values to control how long the LED stays on vs. off.
+Modified the classic Arduino "Blink" example to create a pattern where the LED flashes twice quickly (high-low-high-low in rapid succession), followed by a longer pause before repeating. This required adjusting the delay() timing values to control how long the LED stays on vs. off.
+
 https://github.com/Kassim-Moutary/Kassim-Moutary.github.io/blob/main/projects/ARD-001/blink_pattern.mp4
 
 ## What I Learned
